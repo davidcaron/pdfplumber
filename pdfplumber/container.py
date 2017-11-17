@@ -49,7 +49,9 @@ class Container(object):
     def edges(self):
         if hasattr(self, "_edges"): return self._edges
         line_edges = list(map(utils.line_to_edge, self.lines))
-        self._edges = self.rect_edges + line_edges
+        lines_from_curves = chain(*map(utils.curve_to_lines, self.curves))
+        curve_edges = list(map(utils.line_to_edge, lines_from_curves))
+        self._edges = self.rect_edges + line_edges + curve_edges
         return self._edges
 
     @property

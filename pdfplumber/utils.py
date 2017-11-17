@@ -417,6 +417,22 @@ def line_to_edge(line):
     edge["orientation"] = "h" if (line["top"] == line["bottom"]) else "v"
     return edge
 
+def curve_to_lines(curve):
+    lines = []
+    for n in range(len(curve["points"]) - 1):
+        line = dict(curve)
+        line.pop("points")
+        line["object_type"] = "line"
+        line["x0"], line["y0"] = curve["points"][n]
+        line["x1"], line["y1"] = curve["points"][n + 1]
+        line["top"] = min(line["y0"], line["y1"])
+        line["bottom"] = max(line["y0"], line["y1"])
+        line["doctop"] = line["top"]
+        line["height"] = line["bottom"] - line["top"]
+        line["width"] = max(line["x0"], line["x1"]) - min(line["x0"], line["x1"])
+        lines.append(line)
+    return lines
+
 def filter_edges(edges, orientation=None,
     edge_type=None,
     min_length=1):

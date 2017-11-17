@@ -26,5 +26,6 @@ setup(
     install_requires=base_reqs,
     entry_points={
         "console_scripts": [ "pdfplumber = pdfplumber.cli:main" ] 
-    }
+    },
+    zip_safe=False
 )
